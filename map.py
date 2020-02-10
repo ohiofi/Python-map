@@ -2,9 +2,9 @@
 #
 # How to use Mr. Riley's map class...
 # 1.) from map import *
-# 2.) At the top of your main function, create a map instance: map = Map()
-# 3.) draw/redraw the map INSIDE the game loop: map.draw(roomList, itemList, currentlocation)
-# Don't wanna show yer item locations? Do this: map.draw(roomList, False, currentlocation)
+# 2.) At the top of your main function, create a map instance: map1 = Map()
+# 3.) draw/redraw the map INSIDE the game loop: map1.draw(roomList, itemList, currentlocation)
+# Don't wanna show yer item locations? Do this: map1.draw(roomList, False, currentlocation)
 
 
 from turtle import *
