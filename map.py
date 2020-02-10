@@ -1,9 +1,9 @@
-# Mr. Riley's map class v1.90208
+# Mr. Riley's map class v2.00210
 #
 # How to use Mr. Riley's map class...
 # 1.) from map import *
-# 2.) create a map instance: map = Map()
-# 3.) draw/redraw the map inside the game loop: map.draw(roomList, itemList, currentlocation)
+# 2.) At the top of your main function, create a map instance: map = Map()
+# 3.) draw/redraw the map INSIDE the game loop: map.draw(roomList, itemList, currentlocation)
 # Don't wanna show yer item locations? Do this: map.draw(roomList, False, currentlocation)
 
 
