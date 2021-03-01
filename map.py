@@ -1,4 +1,4 @@
-# Mr. Riley's map class v2.00210
+# Mr. Riley's map class v2.10228
 #
 # How to use Mr. Riley's map class...
 # 1.) from map import *
@@ -33,24 +33,24 @@ class Map(Turtle):
         self.screen.register_shape(
             "bigStar",
             (
-            (-10, -6.5),
-            (10, 0),
-            (-10, 6.5),
-            (2.5, -10),
-            (2.5, 10),
-            (-10, -6.5)
+            (10, 6.5),
+            (-10, 0),
+            (10, -6.5),
+            (-2.5, 10),
+            (-2.5, -10),
+            (10, 6.5)
             ),
         )
-        self.littleStarSize = 4
+        self.littleStarSize = 5
         self.screen.register_shape(
             "littleStar",
             (
-                (-10 / self.littleStarSize, -6.5 / self.littleStarSize),
-                (10 / self.littleStarSize, 0),
-                (-10 / self.littleStarSize, 6.5 / self.littleStarSize),
-                (2.5 / self.littleStarSize, -10 / self.littleStarSize),
-                (2.5 / self.littleStarSize, 10 / self.littleStarSize),
-                (-10 / self.littleStarSize, -6.5 / self.littleStarSize),
+                (10 / self.littleStarSize, 6.5 / self.littleStarSize),
+                (-10 / self.littleStarSize, 0),
+                (10 / self.littleStarSize, -6.5 / self.littleStarSize),
+                (-2.5 / self.littleStarSize, 10 / self.littleStarSize),
+                (-2.5 / self.littleStarSize, -10 / self.littleStarSize),
+                (10 / self.littleStarSize, 6.5 / self.littleStarSize),
             ),
         )
         # reveal instance variables
