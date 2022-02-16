@@ -1,9 +1,9 @@
-# Mr. Riley's map class v2.10228
+# Mr. Riley's map class v2.20216
 #
 # How to use Mr. Riley's map class...
 # 1.) from map import *
 # 2.) At the top of your main function, create a map instance: map1 = Map()
-# 3.) draw/redraw the map INSIDE the game loop: map1.draw(roomList, itemList, currentlocation)
+# 3.) draw/redraw the map INSIDE the game loop: map1.draw(roomList, True, currentlocation)
 # Don't wanna show yer item locations? Do this: map1.draw(roomList, False, currentlocation)
 
 
@@ -146,9 +146,9 @@ class Map(Turtle):
             pass
 
     # if there is an item here, stamp a little star at the current row and column
-    def drawLittleStar(self, row, column, itemArray):
+    def drawLittleStar(self, row, column, roomArray):
         try:
-            if itemArray[column * self.columnHeight + row]:
+            if roomArray[column * self.columnHeight + row]['item']:
                 self.color(self.littleStarColor)
                 self.shape("littleStar")
                 # self.goto(-self.size/2+(self.roomSize/2)+column*(self.roomSize+self.roomBorder)+self.mapBorder,self.size/2-(self.roomSize/2)-row*(self.roomSize+self.roomBorder)-self.mapBorder)
@@ -172,7 +172,7 @@ class Map(Turtle):
             self.stamp()
 
     # use the draw method to draw and redraw the map
-    def draw(self, rooms, roomItems, myLocation):
+    def draw(self, rooms, showItems, myLocation):
         rowWidth = int(math.ceil(len(rooms) / self.columnHeight))
         self.penup()
         self.clear()
@@ -180,7 +180,8 @@ class Map(Turtle):
         for row in range(self.columnHeight):
             for column in range(rowWidth):
                 self.drawRoom(row, column, rooms)
-                self.drawLittleStar(row, column, roomItems)
+                if showItems:
+                    self.drawLittleStar(row, column, rooms)
                 self.drawStart(row, column, self.startingLocation)
                 self.drawBigStar(row, column, myLocation)
         self.screen.update()
