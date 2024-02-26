@@ -1,4 +1,4 @@
-# Mr. Riley's map class v2.20216
+# Mr. Riley's map class v2.40226
 #
 # How to use Mr. Riley's map class...
 # 1.) from map import *
@@ -22,7 +22,7 @@ class Map(Turtle):
         self.roomSize = 20
         self.roomBorder = 2
         self.startingLocation = None
-        self.columnHeight = 100
+        self.row_width = 100
         self.screen.setup(self.size, self.size)
         self.screen.tracer(0)
         self.screen.bgcolor("black")
@@ -88,16 +88,16 @@ class Map(Turtle):
     # transfer rooms within the reveal distance from the rooms array to the mapped rooms array
     def mapTheSurroundingArea(self, myLocation, rooms, roomItems):
         for row in range(
-            myLocation % self.columnHeight - self.revealDistance,
-            myLocation % self.columnHeight + self.revealDistance + 1,
+            myLocation % self.row_width - self.revealDistance,
+            myLocation % self.row_width + self.revealDistance + 1,
         ):
             for col in range(
-                myLocation // self.columnHeight * self.columnHeight
-                - self.revealDistance * self.columnHeight,
-                myLocation // self.columnHeight * self.columnHeight
-                + self.revealDistance * self.columnHeight
-                + self.columnHeight,
-                self.columnHeight,
+                myLocation // self.row_width * self.row_width
+                - self.revealDistance * self.row_width,
+                myLocation // self.row_width * self.row_width
+                + self.revealDistance * self.row_width
+                + self.row_width,
+                self.row_width,
             ):
                 try:
                     self.mappedRooms[row + col] = rooms[row + col]
@@ -108,7 +108,7 @@ class Map(Turtle):
     # if there is a room here, stamp a square at the current row and column
     def drawRoom(self, row, column, roomArray):
         try:
-            if roomArray[column * self.columnHeight + row]:
+            if roomArray[row * self.row_width + column]:
                 self.color(self.roomColor)
                 self.shape("square")
                 self.goto(
@@ -128,7 +128,7 @@ class Map(Turtle):
     # if there is a revealed wall here, stamp a square at the current row and column
     def drawRevealedWall(self, row, column, roomArray):
         try:
-            if roomArray[column * self.columnHeight + row] is False:
+            if roomArray[column * self.row_width + row] is False:
                 self.color(self.revealWallColor)
                 self.shape("square")
                 self.goto(
@@ -148,7 +148,7 @@ class Map(Turtle):
     # if there is an item here, stamp a little star at the current row and column
     def drawLittleStar(self, row, column, roomArray):
         try:
-            if roomArray[column * self.columnHeight + row]['item']:
+            if roomArray[row * self.row_width + column]['item']:
                 self.color(self.littleStarColor)
                 self.shape("littleStar")
                 # self.goto(-self.size/2+(self.roomSize/2)+column*(self.roomSize+self.roomBorder)+self.mapBorder,self.size/2-(self.roomSize/2)-row*(self.roomSize+self.roomBorder)-self.mapBorder)
@@ -158,7 +158,7 @@ class Map(Turtle):
 
     # if there the startingLocation is here, write Start at the current row and column
     def drawStart(self, row, column, _startingLocation):
-        if _startingLocation == column * self.columnHeight + row:
+        if _startingLocation == row * self.row_width + column:
             self.color(self.startTextColor)
             self.back(self.roomSize / 2)
             self.write("Start", font=("Arial", 7, "normal"))
@@ -166,19 +166,20 @@ class Map(Turtle):
 
     # if the currentlocation is here, stamp a big star at the current row and column
     def drawBigStar(self, row, column, myLocation):
-        if myLocation == column * self.columnHeight + row:
+        if myLocation == row * self.row_width + column:
             self.color(self.bigStarColor)
             self.shape("bigStar")
             self.stamp()
 
     # use the draw method to draw and redraw the map
     def draw(self, rooms, showItems, myLocation):
-        rowWidth = int(math.ceil(len(rooms) / self.columnHeight))
+        column_height = int(math.ceil(len(rooms) / self.row_width))
         self.penup()
         self.clear()
         self.setStartingLocation(myLocation)
-        for row in range(self.columnHeight):
-            for column in range(rowWidth):
+        for row in range(column_height):
+            for column in range(self.row_width):
+
                 self.drawRoom(row, column, rooms)
                 if showItems:
                     self.drawLittleStar(row, column, rooms)
@@ -189,12 +190,12 @@ class Map(Turtle):
     # use the reveal method (instead of draw) to SLOWLY draw and reveal the map
     def reveal(self, rooms, roomItems, myLocation):
         self.mapTheSurroundingArea(myLocation, rooms, roomItems)
-        rowWidth = int(math.ceil(len(rooms) / self.columnHeight))
+        column_height = int(math.ceil(len(rooms) / self.row_width))
         self.penup()
         self.clear()
         self.setStartingLocation(myLocation)
-        for row in range(self.columnHeight):
-            for column in range(rowWidth):
+        for row in range(self.row_width):
+            for column in range(column_height):
                 self.drawRoom(row, column, self.mappedRooms)
                 self.drawRevealedWall(row, column, self.mappedRooms)
                 self.drawLittleStar(row, column, self.mappedItems)
